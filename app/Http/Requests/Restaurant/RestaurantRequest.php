@@ -4,6 +4,7 @@ namespace App\Http\Requests\Restaurant;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RestaurantRequest extends FormRequest
 {
@@ -26,7 +27,10 @@ class RestaurantRequest extends FormRequest
     {
         return [
             'name' => ["required"],
-            'ruc' => ["required","numeric", "min:12", "max:12", "unique:restaurant,ruc"],
+            'ruc' => 
+                ["required","integer","min:11", 
+                 Rule::unique('restaurants')->ignore($restaurant_id)
+                ],
             'address' => ["required"],
         ];
     }
@@ -37,7 +41,6 @@ class RestaurantRequest extends FormRequest
             'ruc.required' => "El ruc no puede ser vacio",
             'ruc.numeric' => "El ruc tiene que ser un numero de 11 digitos",
             'ruc.min' => "El ruc tiene que ser un numero de 11 digitos",
-            'ruc.max' => "El ruc tiene que ser un numero de 11 digitos",
             'ruc.unique' => "El ruc indicado ya existe",
             "address.required" => "La direccion no puede ser vacia"
         ];

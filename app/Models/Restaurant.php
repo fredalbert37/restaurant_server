@@ -9,7 +9,7 @@ class Restaurant extends Model
 {
     use HasFactory;
 
-    protected $table = "restaurant";
+    protected $table = "restaurants";
 
 
     public function locals() {

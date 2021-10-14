@@ -17,8 +17,8 @@ class CreateRestaurantsTable extends Migration
             $table->id(); //id del restaurante
             $table->string("restaurant_name"); //nombre del restaurante
             $table->string("ruc"); //ruc del restaurante
-            $table->string("address"); // la direccion de la sede
-            $table->mediumInteger("phone")->nullable(); // el telefono principal del restaurante
+            $table->string("address")->nullable(); // la direccion de la sede
+            $table->integer("phone")->nullable(); // el telefono principal del restaurante
             $table->smallInteger("active")->default(1); //verifica si el restaurante esta activo en el sistema
             $table->timestamps(); // created_at y updated_at de cada fila
         });
