@@ -29,6 +29,10 @@ class RestaurantController extends Controller
     public function search_ruc(Request $request){
         
         $restaurant = Restaurant::where('ruc', $request->ruc)->first();
+        
+        if(!$restaurant){
+            return response()->json(false, 200);
+        }
 
         return response()->json(true, 200);
 

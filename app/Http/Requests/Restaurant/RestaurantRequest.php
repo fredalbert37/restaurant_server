@@ -46,5 +46,14 @@ class RestaurantRequest extends FormRequest
         ];
     }
 
+    /*
+    Rule::unique('products', 'name')->where(function($query) use ($product_id){
+                $query->where('active', 1);
+                if($product_id!=null){
+                    $query->where('id','<>', $product_id);
+                }
+                return $query;
+            }),
+    */
 
 }

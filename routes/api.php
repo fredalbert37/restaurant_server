@@ -20,16 +20,25 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-/***AUTH***/
-Route::prefix('auth')->group(function(){
-    Route::post('/register', [AuthController::class, 'register']);
-});
+
+Route::post('/login', [AuthController::class, 'login']);
 
 
-/***RESTAURANT****/
-Route::prefix('restaurants')->group(function () {
-    Route::get("/", [RestaurantController::class, 'index']);
-    Route::post("/store", [RestaurantController::class, 'store']);
-    Route::put("/update", [RestaurantController::class, 'update']);
-    Route::delete("/", [RestaurantController::class, 'delete']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    
+    /***AUTH***/
+    Route::prefix('/')->group(function(){
+        Route::post('register', [AuthController::class, 'register']);
+    });
+
+    /***RESTAURANT****/
+    Route::prefix('restaurants')->group(function () {
+        Route::get("/", [RestaurantController::class, 'index']);
+        Route::post("/search_ruc", [RestaurantController::class, 'search_ruc']);
+        Route::post("/store", [RestaurantController::class, 'store']);
+        Route::put("/update", [RestaurantController::class, 'update']);
+        Route::delete("/", [RestaurantController::class, 'delete']);
+    });
+    
 });
+

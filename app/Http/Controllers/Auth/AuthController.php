@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    
+    //registro de usuarios
     public function register (Request $request){
         //register new user in database
         $validate = Validator::make(
@@ -40,6 +43,47 @@ class AuthController extends Controller
         }
 
         return response()->json("El usuario fue registrado!", 201);
+    }
+
+    //login de usuarios
+    public function login(Request $request){
+        $credentials  = $request->only('email', 'password');
+        $validate = Validator::make(
+            $credentials,
+            LoginRequest::rules(),
+            LoginRequest::message()
+        );
+
+        if($validate->fails()){
+            return response()->json($validate->errors(), 400);
+        }
+
+        if(!Auth::attempt($credentials)){
+            return response()->json('Usuario no autorizado', 500);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if(!Hash::check($request->password, $user->password)){
+            return response()->json("Contraseña incorrecta", 400);
+        }
+
+        $role = "admin";
+        $tokenResult = $user->createToken('authToken', [$role])->plainTextToken;
+        
+        return response()->json([
+            'token' => "Bearer $tokenResult",
+            'user' => $user
+        ], 200);
+
+    }
+
+    public function logout(Request $request){
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(
+            "Logget Out",
+            200
+        );
     }
 
 
