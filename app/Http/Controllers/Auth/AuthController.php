@@ -10,12 +10,7 @@ class AuthController extends Controller
 {
     
     public function register (Request $request){
-        
-
-        $user = new User();
-
-
-
+        //register new user in database
 
     }
 
