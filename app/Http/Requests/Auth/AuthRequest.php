@@ -30,8 +30,8 @@ class AuthRequest extends FormRequest
             'doc_type' => ['required',Rule::in(["CE", "DNI"])],
             'doc_number' =>
                 [
-                "required", 
-                Rule::unique('users')->ignore($user_id)
+                    "required", 
+                    Rule::unique('users')->ignore($user_id)
                 ],
             'email' => "required", "email",
             'password' => "required", "confirmed",

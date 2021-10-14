@@ -33,12 +33,13 @@ class AuthController extends Controller
             $user->doc_type = $request->doc_type;
             $user->doc_number = $request->doc_number;
             $user->restaurant_id = $request->restaurant_id;
+            $user->role = isset($request->role) ? $request->role : "user";
             $user->save();
         } catch (\Throwable $th) {
             return response()->json($th, 400);
         }
 
-        return response()->json("El usuario fue registrado!", 200);
+        return response()->json("El usuario fue registrado!", 201);
     }
 
 

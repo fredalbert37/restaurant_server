@@ -22,6 +22,18 @@ class RestaurantController extends Controller
         return response()->json($restaurant, 200);
     }
 
+    /**
+     * @return boolean
+     * RETURN A BOOLEAN TRUE OR FALSE IF THE RUC EXISTS
+     */
+    public function search_ruc(Request $request){
+        
+        $restaurant = Restaurant::where('ruc', $request->ruc)->first();
+
+        return response()->json(true, 200);
+
+    }
+
 
     /**
      * @return string
@@ -58,7 +70,7 @@ class RestaurantController extends Controller
         }
         
         //si todo sale bien devolver la respuesta exitosa!
-        return response()->json("Se ha creado el restaurante", 200);
+        return response()->json("Se ha creado el restaurante", 201);
     }
 
 
