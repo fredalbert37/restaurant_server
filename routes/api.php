@@ -21,15 +21,17 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::post('/login', [AuthController::class, 'login']);
 
+
+/***AUTH***/
+Route::prefix('/')->group(function(){
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+});
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     
-    /***AUTH***/
-    Route::prefix('/')->group(function(){
-        Route::post('register', [AuthController::class, 'register']);
-    });
 
     /***RESTAURANT****/
     Route::prefix('restaurants')->group(function () {
@@ -40,5 +42,32 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete("/", [RestaurantController::class, 'delete']);
     });
     
+    
+    //LOCALES
+    Route::prefix('locals')->group(function (){
+        
+    });
+
+
+        /*****QR*****/
+
+
+
+
+
+        
+        
+        
+        
+    //PLATILLOS (DEBE HABER DISPONIBILIDAD 
+    //DEL PLATILLO PONER UN ATRIBUTO PARA ACTIVAR O NO EL PLATILLO SEGUN DISPONIBILIDAD)
+        
+        
+    //CARRITO DE COMPRAS
+
+
+
+
+
 });
 

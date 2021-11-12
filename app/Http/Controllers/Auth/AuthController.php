@@ -45,6 +45,40 @@ class AuthController extends Controller
         return response()->json("El usuario fue registrado!", 201);
     }
 
+    //funcion para editar usuario
+    public function editUser(Request $request){
+        $validate = Validator::make(
+            $request->all(),
+            AuthRequest::rules($request->id),
+            AuthRequest::message()
+        );
+
+        if($validate->fails()){
+            return response()->json($validate->errors(), 400);
+        }
+        
+        try {
+            $user = User::find($request->id);
+            $user->name = $request->name;
+            $user->lastname = $request->lastname;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->doc_type = $request->doc_type;
+            $user->doc_number = $request->doc_number;
+            $user->restaurant_id = $request->restaurant_id;
+            $user->role = isset($request->role) ? $request->role : "user";
+            $user->save();
+        } catch (\Throwable $th) {
+            return response()->json($th, 400);
+        }
+
+        return response()->json("El usuario fue actualizado!", 200);
+    }
+
+
+
+
+
     //login de usuarios
     public function login(Request $request){
         $credentials  = $request->only('email', 'password');

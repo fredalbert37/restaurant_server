@@ -20,6 +20,7 @@ class CreateRestaurantsTable extends Migration
             $table->string("address")->nullable(); // la direccion de la sede
             $table->integer("phone")->nullable(); // el telefono principal del restaurante
             $table->smallInteger("active")->default(1); //verifica si el restaurante esta activo en el sistema
+            $table->date('contract_date')->nullable(); //es la fecha de contrato del restaurante.
             $table->timestamps(); // created_at y updated_at de cada fila
         });
     }

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->smallInteger('active')->default(1);
-            $table->bigInteger("restaurant_id")->unsigned();
+            $table->bigInteger("restaurant_id")->unsigned()->nullable();
             $table->string("role")->default("user");
             $table->foreign("restaurant_id")->references("id")->on("restaurants");
             $table->rememberToken();

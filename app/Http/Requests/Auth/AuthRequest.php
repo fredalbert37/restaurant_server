@@ -35,7 +35,7 @@ class AuthRequest extends FormRequest
                 ],
             'email' => "required", "email",
             'password' => "required", "confirmed",
-            'restaurant_id' => "required",
+            // 'restaurant_id' => "required",
         ];
     }
 
@@ -51,7 +51,7 @@ class AuthRequest extends FormRequest
             'email.email' => 'El email no tiene el formato correcto',
             'password.required' => 'La contraseña no puede ser vacia',
             'password.confirmed' => 'La contraseña debe ser confirmada',
-            'restaurant_id.required' => 'Se debe asignar un restaurante' 
+            // 'restaurant_id.required' => 'Se debe asignar un restaurante' 
         ];
     }
 
