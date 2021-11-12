@@ -17,7 +17,7 @@ class CreateLocalsTable extends Migration
             $table->id(); //id del local
             $table->string("local"); //indica la sede donde se encuentra el restaurante
             $table->string("local_address"); // la direccion de la sede
-            $table->mediumInteger("local_phone")->nullable(); // el telefono de la sede del restaurante
+            $table->integer("local_phone")->nullable(); // el telefono de la sede del restaurante
             $table->smallInteger("active")->default(1); //verifica si la sede esta activa o no en el sistema
             $table->bigInteger("restaurant_id")->unsigned(); //id del restaurante al cual pertenece el local
             $table->foreign("restaurant_id")->references("id")->on("restaurants");

@@ -35,7 +35,7 @@ class AuthController extends Controller
             $user->password = bcrypt($request->password);
             $user->doc_type = $request->doc_type;
             $user->doc_number = $request->doc_number;
-            $user->restaurant_id = $request->restaurant_id;
+            $user->restaurant_id = isset($request->restaurant_id) ? $request->restaurant_id  : null;
             $user->role = isset($request->role) ? $request->role : "user";
             $user->save();
         } catch (\Throwable $th) {
@@ -65,7 +65,7 @@ class AuthController extends Controller
             $user->password = bcrypt($request->password);
             $user->doc_type = $request->doc_type;
             $user->doc_number = $request->doc_number;
-            $user->restaurant_id = $request->restaurant_id;
+            $user->restaurant_id = isset($request->restaurant_id) ? $request->restaurant_id  : null;
             $user->role = isset($request->role) ? $request->role : "user";
             $user->save();
         } catch (\Throwable $th) {
@@ -74,10 +74,6 @@ class AuthController extends Controller
 
         return response()->json("El usuario fue actualizado!", 200);
     }
-
-
-
-
 
     //login de usuarios
     public function login(Request $request){

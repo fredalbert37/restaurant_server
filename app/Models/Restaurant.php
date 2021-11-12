@@ -13,7 +13,7 @@ class Restaurant extends Model
 
 
     public function locals() {
-        return $this->hasMany(Local::class, 'restaurant_id');
+        return $this->hasMany(Local::class, 'restaurant_id')->where('active', 1);
     }
 
     public function users(){

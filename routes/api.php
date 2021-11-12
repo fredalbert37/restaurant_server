@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Local\LocalController;
 use App\Http\Controllers\Restaurant\RestaurantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,7 +46,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     //LOCALES
     Route::prefix('locals')->group(function (){
-        
+        $c = LocalController::class;
+        Route::get("/", [$c, 'index']);
+        Route::post("/store", [$c, 'store']);
+        Route::put("/update", [$c, 'update']);
+        Route::delete("/", [$c, 'delete']);
+
     });
 
 

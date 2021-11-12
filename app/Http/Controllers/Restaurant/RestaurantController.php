@@ -17,7 +17,7 @@ class RestaurantController extends Controller
 
     public function index(){
         //verificando que los restaurantes buscados tengan activo el paremetro active
-        $restaurant = Restaurant::where('active', 1)->get();
+        $restaurant = Restaurant::where('active', 1)->with('locals')->get();
 
         return response()->json($restaurant, 200);
     }
