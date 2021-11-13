@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Local\LocalController;
+use App\Http\Controllers\Meals\MealsController;
 use App\Http\Controllers\Restaurant\RestaurantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,8 +52,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post("/store", [$c, 'store']);
         Route::put("/update", [$c, 'update']);
         Route::delete("/", [$c, 'delete']);
-
     });
+
+    //PLATILLOS
+    Route::prefix('meals')->group(function (){
+        $c = MealsController::class;
+        Route::get('/', [$c, 'index']);
+        Route::get('/store', [$c, 'store']);
+        Route::get('/update', [$c, 'update']);
+        Route::get('/status', [$c, 'status']);
+    }); 
+
 
 
         /*****QR*****/
@@ -65,7 +75,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         
         
         
-    //PLATILLOS (DEBE HABER DISPONIBILIDAD 
+    //PLATILLOS (DEBE HABER DISPONIBILIDAD
+
+
+
     //DEL PLATILLO PONER UN ATRIBUTO PARA ACTIVAR O NO EL PLATILLO SEGUN DISPONIBILIDAD)
         
         
