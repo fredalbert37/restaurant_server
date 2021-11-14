@@ -16,6 +16,10 @@ class Restaurant extends Model
         return $this->hasMany(Local::class, 'restaurant_id')->where('active', 1);
     }
 
+    public function meals(){
+        return $this->hasMany(Meal::class, "restaurant_id");
+    }
+
     public function users(){
         return $this->hasOne(Users::class, 'restaurant_id');
     }

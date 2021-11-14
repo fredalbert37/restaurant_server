@@ -15,5 +15,9 @@ class Local extends Model
         return $this->belongsTo(Restaurant::class, "restaurant_id");
     }
 
+    public function meals(){
+        return $this->hasMany(Meal::class, "local_id");
+    }
+
 
 }

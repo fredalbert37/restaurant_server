@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/')->group(function(){
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('edit_user', [AuthController::class, 'editUser']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
 
@@ -58,9 +59,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('meals')->group(function (){
         $c = MealsController::class;
         Route::get('/', [$c, 'index']);
-        Route::get('/store', [$c, 'store']);
-        Route::get('/update', [$c, 'update']);
-        Route::get('/status', [$c, 'status']);
+        Route::post('/store', [$c, 'store']);
+        Route::put('/update', [$c, 'update']);
+        Route::post('/status', [$c, 'status']);
     }); 
 
 

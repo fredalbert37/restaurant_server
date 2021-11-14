@@ -66,6 +66,7 @@ class RestaurantController extends Controller
             $r->ruc = $request->ruc;
             $r->address = $request->address;
             $r->phone = isset($request->phone) ? $request->phone : null;
+            $r->contract_date = $request->contract_date;
             $r->save();
 
         } catch (\Throwable $th) {
@@ -100,6 +101,7 @@ class RestaurantController extends Controller
             $r->ruc = $request->ruc;
             $r->address = $request->address;
             $r->phone = isset($request->phone) ? $request->phone : null;
+            $r->contract_date = $request->contract_date;
             $r->save();
 
         } catch (\Throwable $th) {
