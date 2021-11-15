@@ -19,5 +19,9 @@ class Meal extends Model
         return $this->belongsTo(Restaurant::class, 'restaurant_id');
     }
 
+    public function menus(){
+        return $this->belongsTo(Menu::class, 'menu_id');
+    }
+
 
 }

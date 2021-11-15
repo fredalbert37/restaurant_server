@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Meals;
+namespace App\Http\Controllers\Menu;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Meals\MealRequest;
-use App\Models\Meal;
+use App\Http\Requests\Menu\MenuRequest;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class MealsController extends Controller
+class MenuController extends Controller
 {
      /**
-     * @return Meal::class
-     * RETURN A LIST OF Meals
+     * @return Menu::class
+     * RETURN A LIST OF Menus
      */
 
     public function index(){
-        //verificando que los platillos buscados tengan activo el paremetro active
-        $meals = Meal::where('active', 1)->with('menus')->with('locals')->with('restaurants')->get();
+        //verificando que los menus buscados tengan activo el paremetro active
+        $menu = Menu::where('active', 1)->with('meals')->with('locals')->with('restaurants')->get();
 
-        return response()->json($meals, 200);
+        return response()->json($menu, 200);
     }
 
 
@@ -34,8 +34,8 @@ class MealsController extends Controller
         //validando el request que llega del front end
         $validate = Validator::make(
             $request->all(),
-            MealRequest::rules(),
-            MealRequest::message() 
+            MenuRequest::rules(),
+            MenuRequest::message() 
         );
 
         //si la validacion falla devolver los errores del server con codigo HTTP::ERROR
@@ -45,15 +45,11 @@ class MealsController extends Controller
 
         //intenter realizar la insercion en la base de datos
         try {
-            //guardando el platillo con todos los campos que se necesitan
-            $m = new Meal();
+            //guardando el menu con todos los campos que se necesitan
+            $m = new Menu();
             $m->name = strtoupper($request->name);
-            $m->menu_id = $request->menu_id;
             $m->local_id = $request->local_id;
             $m->restaurant_id = $request->restaurant_id;
-            $m->price = $request->price;
-            $m->description = $request->description;
-            $m->category = $request->category;
             $m->save();
 
         } catch (\Throwable $th) {
@@ -61,7 +57,7 @@ class MealsController extends Controller
         }
         
         //si todo sale bien devolver la respuesta exitosa!
-        return response()->json("Se ha creado el platillo", 201);
+        return response()->json("Se ha creado el menu", 201);
     }
 
 
@@ -73,8 +69,8 @@ class MealsController extends Controller
     public function update(Request $request){
         $validate = Validator::make(
             $request->all(),
-            MealRequest::rules($request->id),
-            MealRequest::message() 
+            MenuRequest::rules($request->id),
+            MenuRequest::message() 
         );
 
         if($validate->fails()){
@@ -82,14 +78,11 @@ class MealsController extends Controller
         }
 
         try {
-            //guardando el platillo con todos los campos que se necesitan
-            $m = Meal::find($request->id);
+            //guardando el menu con todos los campos que se necesitan
+            $m = Menu::find($request->id);
             $m->name = strtoupper($request->name);
             $m->local_id = $request->local_id;
             $m->restaurant_id = $request->restaurant_id;
-            $m->price = $request->price;
-            $m->description = $request->description;
-            $m->category = $request->category;
             $m->save();
 
         } catch (\Throwable $th) {
@@ -97,7 +90,7 @@ class MealsController extends Controller
         }
         
         //si todo sale bien devolver la respuesta exitosa!
-        return response()->json("Se ha actualizado el platillo", 200);
+        return response()->json("Se ha actualizado el menu", 200);
 
     }
 
@@ -106,23 +99,10 @@ class MealsController extends Controller
      * RESPONSE HTTP:500 RETURN A JSON HTTP_ERROR FROM THE SERVER
      */
     public function delete(Request $request){
-        $m = Meal::find($request->id);
+        $m = Menu::find($request->id);
         $m->active = 0;
         $m->save();
 
-        return response()->json("Se ha eliminado el platillo", 200);
+        return response()->json("Se ha eliminado el menu", 200);
     }
-
-    public function SetStatus(Request $request){
-
-        $m = Meal::find($request->id);
-        $m->status = $m->status==1? 0: 1;
-        $m->save();
-
-        return response()->json("Se ha cambiado el estado del platillo", 200);
-    }
-
-
-
-
 }

@@ -27,11 +27,7 @@ class RestaurantRequest extends FormRequest
     {
         return [
             'name' => ["required"],
-            'ruc' => 
-                ["required","integer","min:11", 
-                 Rule::unique('restaurants')->ignore($restaurant_id)
-                ],
-            'ruc' => ['required', 'numeric', "min:11", Rule::unique('restaurants', 'ruc')->where(function($query) use ($restaurant_id) {
+            'ruc' => ['required', 'numeric', Rule::unique('restaurants', 'ruc')->where(function($query) use ($restaurant_id) {
                 $query->where('active', 1);
                 if($restaurant_id != null){
                     $query->where('id','<>', $restaurant_id);
@@ -47,7 +43,7 @@ class RestaurantRequest extends FormRequest
             'name.required' => "El nombre no puede ser vacio",
             'ruc.required' => "El ruc no puede ser vacio",
             'ruc.numeric' => "El ruc tiene que ser un numero de 11 digitos",
-            'ruc.min' => "El ruc tiene que ser un numero de 11 digitos",
+            'ruc.size' => "El ruc tiene que ser un numero de 11 digitos",
             'ruc.unique' => "El ruc indicado ya existe",
             "address.required" => "La direccion no puede ser vacia"
         ];

@@ -17,7 +17,12 @@ class Restaurant extends Model
     }
 
     public function meals(){
-        return $this->hasMany(Meal::class, "restaurant_id");
+        return $this->hasMany(Meal::class, "restaurant_id")->where('active', 1);
+    }
+
+    
+    public function menus(){
+        return $this->hasMany(Menu::class, "restaurant_id")->where('active', 1);
     }
 
     public function users(){

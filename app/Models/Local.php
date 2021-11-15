@@ -16,8 +16,15 @@ class Local extends Model
     }
 
     public function meals(){
-        return $this->hasMany(Meal::class, "local_id");
+        return $this->hasMany(Meal::class, "local_id")->where('active', 1);
     }
+
+
+    public function menus(){
+        return $this->hasMany(Menu::class, 'local_id')->where('active', 1);
+    }
+
+
 
 
 }
